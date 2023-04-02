@@ -16,10 +16,10 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ post.h1 }}</li>
                 </ol>
             </nav>
-            <img class="img-fluid rounded " src="{{ post.image.url }}" alt="">
             <hr>
             <p class="lead">
-                {{ post.content|safe }}  # |truncatechars:2500 - ограничение количества символов в посте.(отрежет aside)
+                <!--|truncatechars:2500 - ограничение количества символов в посте.(отрежет aside-->
+                {{ post.content|safe }}
             </p>
             <hr>
             <p class="lead text-right">Автор: {{ post.author }}</p>
@@ -31,5 +31,4 @@
         {% include './block/aside.html' %}
     </div>
 </div>
-
 {% endblock %}
