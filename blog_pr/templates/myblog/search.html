@@ -25,8 +25,10 @@
         </div>
     </div>
 </div>
-{% endblock %}
 
+{% endblock content %}
+
+<!--Не уверен, что оно мне тут нужно...-->
 {% block pagination %}
 <nav aria-label="Paginate me">
     <ul class="pagination justify-content-center">
@@ -41,9 +43,9 @@
         {% endif %}
         {% for i in results.paginator.page_range %}
         {% if i == results.number %}
-        <li class="page-item active"><a class="page-link"
-                                        href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i
-            }}</a></li>
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
+        </li>
         {% else %}
         <li class="page-item"><a class="page-link"
                                  href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
@@ -61,4 +63,4 @@
     </ul>
 </nav>
 <br>
-{% endblock %}
+{% endblock pagination %}
