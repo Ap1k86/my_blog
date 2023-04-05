@@ -5,12 +5,6 @@
         </ol>
     </nav>
     <img class="img-fluid rounded " src="{{ post.image.url }}" alt="">
-    <hr>
-    <p class="lead">
-        <!--|truncatechars:2500 - ограничение количества символов в посте.(отрежет aside-->
-        {{ post.content|safe|truncatechars:100 }}
-    </p>
-    <hr>
     <p class="lead text-right">Автор: {{ post.author }}</p>
     <hr>
     <p class="text-right">Опубликовано {{ post.created_at }}</p>

@@ -1,20 +1,12 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <!-- Ссылки на соц сети.-->
-    <a href="#" class="navbar-brand">
+    <a href="https://www.instagram.com/vitali_mitor/" class="navbar-brand">
         <img src="{% static '/img/Instagram.png' %}" width="30" height="30"
              alt="logo">
     </a>
-    <a href="#" class="navbar-brand">
+    <a href="https://www.youtube.com/channel/UCGY2BNxOBsHUS9XScGYMhHQ" class="navbar-brand">
         <img src="{% static '/img/Youtube.png' %}" width="30" height="30" alt="logo">
-    </a>
-    <a href="#" class="navbar-brand">
-        <img src="https://www.pngall.com/wp-content/uploads/5/Instagram-Logo-PNG-Download-Image.png" width="30"
-             height="30" alt="logo">
-    </a>
-    <a href="#" class="navbar-brand">
-        <img src="https://www.pngall.com/wp-content/uploads/5/Instagram-Logo-PNG-Download-Image.png" width="30"
-             height="30" alt="logo">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -26,11 +18,11 @@
             <li class="nav-item active">
                 <a href="{% url 'index' %}" class="nav-link">Главная</a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a href="{% url 'contact' %}" class="nav-link">Контакты</a>
             </li>
         </ul>
-        <!-- Форма для поиска обрабатывается страницей по path('search/', SearchResultsView.as_view(), name='search_results')-->
+        <!--Форма для поиска обрабатывается страницей по path('search/', SearchResultsView.as_view(), name='search_results')-->
         <form action="{% url 'search_results' %}" method="get" class="form-inline my-2 my-lg-0">
             <input name="q" type="text" class="form-control mr-sm-2" placeholder="Поиск" aria-label="Поиск">
             <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Поиск</button>

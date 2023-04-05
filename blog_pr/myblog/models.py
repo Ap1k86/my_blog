@@ -17,3 +17,18 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# Модель комментарии.
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_name')
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    objects = models.Model
+
+    class Meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.text

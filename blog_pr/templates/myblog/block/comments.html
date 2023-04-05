@@ -1,3 +1,4 @@
+{% load static %}
 <div class="card my-4">
     <h5 class="card-header">Прокомментируй:</h5>
     {% if user.is_authenticated %}
@@ -11,8 +12,7 @@
         </form>
     </div>
     {% else %}
-    <h6 class="card-header"><a href="#">Авторизуйтесь</a> или <a href="#">зарегистрируйтесь</a>
-        чтобы оставить комментарий</h6>
+    <h6 class="card-header"><a href="{% url 'signin' %}">Авторизуйтесь</a> или <a href="{% url 'signup' %}">зарегистрируйтесь</a> чтобы оставить комментарий</h6>
     {% endif %}
 </div>
 {% for comment in post.comments.all %}
