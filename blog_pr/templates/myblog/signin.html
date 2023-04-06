@@ -18,13 +18,15 @@
     </div>
     {% endfor %}
     {% endif %}
-    <form class="form-signin" method="post" action="{% url 'signin' %}">
+    <form class="col-md-4 mb-3 mx-auto" method="post" action="{% url 'signin' %}">
         {% csrf_token %}
+
         <h1 class="h3 mb-3 mt-3 font-weight-normal">Пожалуйста укажите логин и пароль</h1>
-        <label for="inputUsername" class="sr-only">Имя пользователя</label>
+        <label for="inputUsername" class="mx-auto"></label>
         {{ form.username }}
-        <label for="inputPassword" class="sr-only">Пароль</label>
+        <label for="inputPassword" class="mx-auto"></label>
         {{ form.password }}
+
         <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Войти</button>
     </form>
 </div>

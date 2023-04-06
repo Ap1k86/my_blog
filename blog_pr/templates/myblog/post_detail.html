@@ -21,11 +21,6 @@
                 <!--|truncatechars:2500 - ограничение количества символов в посте.(отрежет aside-->
                 {{ post.content|safe }}
             </p>
-            <hr>
-            <p class="lead text-right">Автор: {{ post.author }}</p>
-            <hr>
-            <p class="text-right">Опубликовано {{ post.created_at }}</p>
-            <hr>
             {% include './block/comments.html' %}
         </div>
         {% include './block/aside.html' %}

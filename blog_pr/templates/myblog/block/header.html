@@ -1,12 +1,17 @@
 {% load static %}
 <div class="container-fluid home-slider">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <!--Это делает отступ текста от верхней границы.-->
         <div class="carousel-inner">
-            <div class="carousel-item active" style="background-color: #343a40!important">
-                <div class="carousel-caption d-none d-md-block">
+            <!-- Докрутил хедер до нужного размера: height: 150px;-->
+            <div class="carousel-item active" style="background-color: #343a40!important; height: 150px;">
+                <!--Докрутил текст до середины темного фона: style="height: 10px;"-->
+                <div class="carousel-caption d-none d-md-block" style="height: 10px;">
                     <h1>
+                        <!--Если есть запись в Post.h1 пишем, то что в поле "h1"-->
                         {% if post.h1 %}
                         {{ post.h1 }}
+                        <!--Иначе пишем то что в "title"-->
                         {% else %}
                         {{ title }}
                         {% endif %}

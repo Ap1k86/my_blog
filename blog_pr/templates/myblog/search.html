@@ -25,11 +25,10 @@
         </div>
     </div>
 </div>
-
 {% endblock content %}
 
 <!--Не уверен, что оно мне тут нужно...-->
-{% block pagination %}
+{% block pagination_2 %}
 <nav aria-label="Paginate me">
     <ul class="pagination justify-content-center">
         {% if results.has_previous %}
@@ -52,6 +51,7 @@
         </li>
         {% endif %}
         {% endfor %}
+        <!--Если что-то нашло.-->
         {% if results.has_next %}
         <a class="page-link"
            href="?page={{ results.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Следующая</a>
@@ -63,4 +63,4 @@
     </ul>
 </nav>
 <br>
-{% endblock pagination %}
+{% endblock pagination_2 %}
