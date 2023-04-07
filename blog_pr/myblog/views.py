@@ -133,11 +133,11 @@ class SuccessView(View):
 # Обработка страницы поиска.
 class SearchResultsView(View):
     def get(self, request, *args, **kwargs):
-        query = self.request.GET.get('q')
+        query = self.request.GET.get('q')  # АААААААААААА
         results = ""
         if query:
             results = Post.objects.filter(
-                Q(h1__icontains=query) | Q(content__icontains=query)
+                Q(h1__icontains=query) | Q(content__icontains=query)  # Добавить Teg для поиска.
             )
         paginator = Paginator(results, 6)
         page_number = request.GET.get('page')
