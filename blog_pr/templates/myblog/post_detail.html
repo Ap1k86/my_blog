@@ -1,7 +1,10 @@
 {% extends './base.html' %}
 {% load static %}
+
+<!--передаю в название заголовок открытого поста.-->
 {% block title %}{{ post.title }}{% endblock %}
 
+<!---->
 {% block header %}
 {% include './block/header.html' %}
 {% endblock %}

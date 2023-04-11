@@ -14,12 +14,14 @@ class MainView(View):
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
         paginator = Paginator(posts, 6)
+        visuals = Visual.objects.order_by('index').all()
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
         return render(request, 'myblog/home.html', context={
-            'page_obj': page_obj
+            'page_obj': page_obj,
+            'visuals': visuals
         })
 
 
@@ -137,7 +139,8 @@ class SearchResultsView(View):
         results = ""
         if query:
             results = Post.objects.filter(
-                Q(h1__icontains=query) | Q(content__icontains=query)  # Добавить Teg для поиска.
+                # Ищем по заголовку 'h1' и специальному полю 'keyword'
+                Q(h1__icontains=query) | Q(keyword__icontains=query)
             )
         paginator = Paginator(results, 6)
         page_number = request.GET.get('page')
@@ -147,3 +150,9 @@ class SearchResultsView(View):
             'results': page_obj,
             'count': paginator.count
         })
+
+#
+# Для курусели.
+# def vision(request):
+#     visuals = Visual.objects.order_by('index').all()
+#     return render_to_response('vision.html', {'visuals': visuals})

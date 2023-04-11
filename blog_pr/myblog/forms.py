@@ -21,6 +21,7 @@ class SigUpForm(forms.Form):
 
     # Метод для валидации форм.
     def clean(self):
+        # Получаю словарь 'cleaned_data'
         password = self.cleaned_data['password']
         confirm_password = self.cleaned_data['repeat_password']
 

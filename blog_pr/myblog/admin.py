@@ -3,6 +3,7 @@ from .models import *
 
 
 # Зарегистрировал модель Post в админке.
+@admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     # Для автозаполнения url в админке. Значение берется из title.
     prepopulated_fields = {'url': ('title',)}
@@ -10,9 +11,12 @@ class PostAdmin(admin.ModelAdmin):
 
 
 # Зарегистрировал модель Comment в админке.
+@admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(Post, PostAdmin)
-# admin.site.register(Comment, PostAdmin)
+# Зарегистрировал модель фото в админке. (хз зачем))
+@admin.register(Visual)
+class VisualAdmin(admin.ModelAdmin):
+    pass

@@ -5,6 +5,10 @@
         </ol>
     </nav>
     <img class="img-fluid rounded " src="{{ post.image.url }}" alt="">
+    <hr>
+    <!--Сюда AAАААААААААААААААААААA |safe для нормального отображения поста, без HTML приблуд.-->
+    <p class="text"> {{ post.options|safe }}</p>
+    <hr>
     <p class="lead text-right">Автор: {{ post.author }}</p>
     <hr>
     <p class="text-right">Опубликовано {{ post.created_at }}</p>

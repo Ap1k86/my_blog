@@ -12,14 +12,19 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+<!--Подключаем верхнюю панель-->
 {% include './block/navbar.html' %}
 
+<!--Сюда вставляем хедер, если он нужен(Темная полоска с надписью) !Сделать меньше!-->
 {% block header %}{% endblock header %}
 
+<!--Блок пагинации сверху-->
 {% block pagination_1 %}{% endblock pagination_1 %}
 
+<!--Блок основного контента-->
 {% block content %}{% endblock content %}
 
+<!--Блок пагинации снизу-->
 {% block pagination_2 %}{% endblock pagination_2 %}
 
 <!-- Подключаем футер из папки myblog/block -->
