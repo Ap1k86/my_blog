@@ -20,6 +20,9 @@
             {% for result in results %}
             <a href="{% url 'post_detail' slug=result.url %}"><h2>{{ result.h1 }}</h2></a>
             <p>{{ result.description|safe }}</p>
+            <p>{{ result.options|safe }}</p>
+            <p>Дата создания: {{ result.created_at|safe }}</p>
+            <p>Автор: {{ result.author|safe }}</p>
             <hr>
             {% endfor %}
         </div>

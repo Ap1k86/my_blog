@@ -152,8 +152,9 @@ CKEDITOR_CONFIGS = {
 }
 
 # Для перенаправления при нажатии на выход.
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"  # ?next={{ request.path }}
 
+# Для обратной связи.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True

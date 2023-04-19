@@ -6,6 +6,8 @@
 {% include './block/slider.html' %}
 {% endblock %}
 {% block pagination_1 %}
+<br>
+<br>
 <nav aria-label="Paginate me">
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
@@ -31,7 +33,7 @@
         {% endif %}
     </ul>
 </nav>
-
+<br>
 {% endblock pagination_1 %}
 
 {% block content %}
@@ -40,8 +42,8 @@
     <div class="row">
         {% for post in page_obj %}
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                <a href="{% url 'post_detail' slug=post.url %}"><img src="media/{{ post.image }}" alt="" class="card-img-top"></a>
+            <div class="card mb-4 shadow-sm for_content">
+                <a href="{% url 'post_detail' slug=post.url %}"><img src="media/{{ post.image }}" alt="" class="card-img-top foto"></a>
                 <div class="card-body">
                     <h4 class="card-title">{{ post.h1 }}</h4>
                     {{ post.description|safe|truncatechars:100 }}

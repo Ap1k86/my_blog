@@ -18,11 +18,11 @@ class MainView(View):
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-
-        return render(request, 'myblog/home.html', context={
+        context = {
             'page_obj': page_obj,
             'visuals': visuals
-        })
+        }
+        return render(request, 'myblog/home.html', context=context)
 
 
 # Страница поста.
@@ -31,11 +31,12 @@ class PostDetailView(View):
         post = get_object_or_404(Post, url=slug)
         last_posts = Post.objects.all().order_by('-id')[:5]
         comment_form = CommentForm()
-        return render(request, 'myblog/post_detail.html', context={
+        context = {
             'post': post,
             'last_posts': last_posts,
             'comment_form': comment_form
-        })
+        }
+        return render(request, 'myblog/post_detail.html', context=context)
 
     def post(self, request, slug, *args, **kwargs):
         comment_form = CommentForm(request.POST)
@@ -45,9 +46,10 @@ class PostDetailView(View):
             post = get_object_or_404(Post, url=slug)
             comment = Comment.objects.create(post=post, username=username, text=text)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        return render(request, 'myblog/post_detail.html', context={
+        context = {
             'comment_form': comment_form
-        })
+        }
+        return render(request, 'myblog/post_detail.html', context=context)
 
 
 # Обработка формы регистрации.
@@ -55,9 +57,10 @@ class SignUpView(View):
     # Для гет запроса
     def get(self, request, *args, **kwargs):
         form = SigUpForm()
-        return render(request, 'myblog/signup.html', context={
+        context = {
             'form': form,
-        })
+        }
+        return render(request, 'myblog/signup.html', context=context)
 
     # Для пост запроса.
     def post(self, request, *args, **kwargs):
@@ -67,9 +70,10 @@ class SignUpView(View):
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect('/')
-        return render(request, 'myblog/signup.html', context={
+        context = {
             'form': form,
-        })
+        }
+        return render(request, 'myblog/signup.html', context=context)
 
 
 # Обработка формы авторизации !!!
@@ -77,9 +81,10 @@ class SignInView(View):
     # Обработка гет запроса
     def get(self, request, *args, **kwargs):
         form = SignInForm()
-        return render(request, 'myblog/signin.html', context={
+        context = {
             'form': form,
-        })
+        }
+        return render(request, 'myblog/signin.html', context=context)
 
     # Обработка пост запроса.
     def post(self, request, *args, **kwargs):
@@ -91,9 +96,10 @@ class SignInView(View):
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect('/')
-        return render(request, 'myblog/signin.html', context={
+        context = {
             'form': form,
-        })
+        }
+        return render(request, 'myblog/signin.html', context=context)
 
 
 # Вьюшка для обработки страницы обратной связи.
@@ -101,10 +107,11 @@ class FeedBackView(View):
     # Обработка GET Запроса
     def get(self, request, *args, **kwargs):
         form = FeedBackForm()
-        return render(request, 'myblog/contact.html', context={
+        context = {
             'form': form,
             'title': 'Написать мне'
-        })
+        }
+        return render(request, 'myblog/contact.html', context=context)
 
     # Обработка POST запроса.
     def post(self, request, *args, **kwargs):
@@ -119,24 +126,26 @@ class FeedBackView(View):
             except BadHeaderError:
                 return HttpResponse('Невалидный заголовок')
             return HttpResponseRedirect('success')
-        return render(request, 'myblog/contact.html', context={
+        context = {
             'form': form,
-        })
+        }
+        return render(request, 'myblog/contact.html', context=context)
 
 
 # Обработка страницы благодарности.
 class SuccessView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'myblog/success.html', context={
+        context = {
             'title': 'Спасибо'
-        })
+        }
+        return render(request, 'myblog/success.html', context=context)
 
 
 # Обработка страницы поиска.
 class SearchResultsView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')  # АААААААААААА
-        results = ""
+        results = ""  # Без этой хрени выдаёт ошибку.
         if query:
             results = Post.objects.filter(
                 # Ищем по заголовку 'h1' и специальному полю 'keyword'
@@ -145,14 +154,9 @@ class SearchResultsView(View):
         paginator = Paginator(results, 6)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'myblog/search.html', context={
+        context = {
             'title': 'Поиск',
             'results': page_obj,
             'count': paginator.count
-        })
-
-#
-# Для курусели.
-# def vision(request):
-#     visuals = Visual.objects.order_by('index').all()
-#     return render_to_response('vision.html', {'visuals': visuals})
+        }
+        return render(request, 'myblog/search.html', context=context)

@@ -30,10 +30,10 @@
         <!--Если пользователь зарегистрирован он не видит Вход и Регистрация-->
         {% if user.is_authenticated %}
         <span class="navbar-text mr-2">{{ user }}</span>
-        <a href="{% url 'signout' %}" class="btn btn-outline-light">Выход</a>
+        <a href="{% url 'signout' %}?next={{ request.path }}" class="btn btn-outline-light">Выход</a>
         {% else %}
-        <a href="{% url 'signin' %}" class="btn btn-outline-light mr-2">Вход</a>
-        <a href="{% url 'signup' %}" class="btn btn-outline-light mr-2">Регистрация</a>
+        <a href="{% url 'signin' %}?next={{ request.path }}" class="btn btn-outline-light mr-2">Вход</a>
+        <a href="{% url 'signup' %}?next={{ request.path }}" class="btn btn-outline-light mr-2">Регистрация</a>
         {% endif %}
     </div>
 </nav>

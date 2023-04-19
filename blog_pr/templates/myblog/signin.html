@@ -18,7 +18,7 @@
     </div>
     {% endfor %}
     {% endif %}
-    <form class="col-md-4 mb-3 mx-auto" method="post" action="{% url 'signin' %}">
+    <form class="col-md-4 mb-3 mx-auto" method="post" action="{% url 'signin' %}?next={{ request.path }}">
         {% csrf_token %}
         <h1 class="h3 mb-3 mt-3 font-weight-normal">Пожалуйста укажите логин и пароль</h1>
         <label for="inputUsername" class="mx-auto"></label>
