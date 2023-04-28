@@ -1,0 +1,37 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}Форум{% endblock title %}
+
+{% block header %}
+{% include './block/header.html' %}
+{% endblock %}
+
+{% block pagination_1 %}
+{% endblock pagination_1 %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-3">Последние записи форума</h1>
+    <div class="row">
+        {% for post_forum in page_obj_forum %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm for_content">
+                <a href=""><img src="/media/{{ post_forum.img }}" alt="" class="card-img-top foto"></a>
+                <div class="card-body">
+                    <h4 class="card-title">{{ post_forum.title }}</h4>
+                    {{ post_forum.content|safe|truncatechars:100 }}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ post_forum.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block pagination_2 %}
+{% endblock pagination_2 %}

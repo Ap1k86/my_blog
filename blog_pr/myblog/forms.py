@@ -90,3 +90,13 @@ class CommentForm(forms.ModelForm):
                 'rows': 3
             }),
         }
+
+
+# Форма поста на форуме.
+class PostForForum(forms.ModelForm):
+    pass
+
+
+# Форма комментария.
+class CommentFormForForum(forms.ModelForm):
+    pass

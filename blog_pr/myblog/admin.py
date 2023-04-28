@@ -16,7 +16,11 @@ class CommentAdmin(admin.ModelAdmin):
     pass
 
 
-# Зарегистрировал модель фото в админке. (хз зачем))
-@admin.register(Visual)
-class VisualAdmin(admin.ModelAdmin):
+@admin.register(ForumPost)
+class ForumPostAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CommentForum)
+class CommentForum(admin.ModelAdmin):
     pass

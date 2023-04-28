@@ -9,18 +9,26 @@ from django.core.mail import send_mail, BadHeaderError
 from django.db.models import Q  # нужна для построения QuerySet "Магия"
 
 
+# https://docs.djangoproject.com/en/4.2/topics/class-based-views/
 # Основная страница.
 class MainView(View):
+
     def get(self, request, *args, **kwargs):
         posts = Post.objects.all()
+        posts_forum = ForumPost.objects.all()
+
         paginator = Paginator(posts, 6)
-        visuals = Visual.objects.order_by('index').all()
+        paginator_forum = Paginator(posts_forum, 6)
 
         page_number = request.GET.get('page')
+        page_number_forum = request.GET.get('page')
+
         page_obj = paginator.get_page(page_number)
+        page_obj_forum = paginator_forum.get_page(page_number_forum)
+
         context = {
             'page_obj': page_obj,
-            'visuals': visuals
+            'page_obj_forum': page_obj_forum,
         }
         return render(request, 'myblog/home.html', context=context)
 
@@ -109,7 +117,7 @@ class FeedBackView(View):
         form = FeedBackForm()
         context = {
             'form': form,
-            'title': 'Написать мне'
+            'title': 'Написать мне'  # То что пишет в хедере
         }
         return render(request, 'myblog/contact.html', context=context)
 
@@ -160,3 +168,41 @@ class SearchResultsView(View):
             'count': paginator.count
         }
         return render(request, 'myblog/search.html', context=context)
+
+
+# Обработка страницы форуму
+class ForumView(View):
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all()
+        posts_forum = ForumPost.objects.all()
+
+        paginator = Paginator(posts, 6)
+        paginator_forum = Paginator(posts_forum, 6)
+
+        page_number = request.GET.get('page')
+        page_number_forum = request.GET.get('page')
+
+        page_obj = paginator.get_page(page_number)
+        page_obj_forum = paginator_forum.get_page(page_number_forum)
+
+        context = {
+            'title': 'Форум',
+            'page_obj': page_obj,
+            'page_obj_forum': page_obj_forum,
+        }
+        return render(request, 'myblog/forum.html', context=context)
+
+
+#
+class ForumDetailView(View):
+    def get(self, request):
+        context = {
+            'title': 'Форум'  # То что пишет в хедере
+        }
+        return render(request, 'myblog/forum.html', context=context)
+
+    def post(self, request):
+        context = {
+            'title': 'Форум'  # То что пишет в хедере
+        }
+        return render(request, 'myblog/forum.html', context=context)

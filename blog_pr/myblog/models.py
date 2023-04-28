@@ -18,6 +18,10 @@ class Post(models.Model):
     keyword = models.CharField(max_length=200, default='123')
     objects = models.Model
 
+    class Meta:
+        verbose_name = 'Пост главной страницы'
+        verbose_name_plural = 'Посты на главной странице'
+
     def __str__(self):
         return self.title
 
@@ -31,28 +35,44 @@ class Comment(models.Model):
     objects = models.Model
 
     class Meta:
+        verbose_name = 'Комментарий под постом главной страницы'
+        verbose_name_plural = 'Комментарии под постом главной страницы'
         ordering = ['-created_date']
 
     def __str__(self):
         return self.text
 
 
-# Модель для хранения фоток в слайдере.(Карусель). ДУМАЙ.
-class Visual(models.Model):
-    class Meta:
-        db_table = 'app_ideator_visuals'
-
-    # CharField(max_length=120, verbose_name='Файл картинки') 2-й вариант, если слизать не получится...
-    img = models.CharField(max_length=120, verbose_name='Файл картинки')
-    # url = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Выберите маршрут', related_name='urls')
-    title = models.CharField(max_length=120, verbose_name='Заголовок')
-    body = models.TextField(verbose_name='Описание')
-    alt = models.TextField(verbose_name='Подсказка')
-    index = models.IntegerField(verbose_name='Индекс')
+# Модель постов на форуме.
+class ForumPost(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Заголовок ")
+    content = RichTextUploadingField(verbose_name="Описание")
+    img = models.ImageField(upload_to='forum', null=True, blank=True)
+    created_at = models.DateField(default=timezone.now)
+    author = models.ManyToManyField(User, verbose_name="Автор")
+    keyword = models.CharField(max_length=200, default='аквариум, рыбки')
     objects = models.Model
 
-    def __unicode__(self):
-        return self.title
+    class Meta:
+        verbose_name = 'Пост на форуме'
+        verbose_name_plural = 'Посты на форуме'
 
     def __str__(self):
         return self.title
+
+
+# Модель комментарии на форуме.
+class CommentForum(models.Model):
+    post = models.ForeignKey(ForumPost, on_delete=models.CASCADE, related_name='comments_forum')
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_name_forum')
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    objects = models.Model
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии на форуме'
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.text

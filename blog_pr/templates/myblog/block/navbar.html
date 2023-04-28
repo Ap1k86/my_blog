@@ -18,9 +18,9 @@
             <li class="nav-item active">
                 <a href="{% url 'index' %}" class="nav-link">Главная</a>
             </li>
-<!--            <li class="nav-item">-->
-<!--                <a href="{% url 'contact' %}" class="nav-link">Контакты</a>-->
-<!--            </li>-->
+            <!--            <li class="nav-item">-->
+            <!--                <a href="{% url 'contact' %}" class="nav-link">Контакты</a>-->
+            <!--            </li>-->
         </ul>
         <!--Форма для поиска обрабатывается страницей по path('search/', SearchResultsView.as_view(), name='search_results')-->
         <form action="{% url 'search_results' %}" method="get" class="form-inline my-2 my-lg-0">
@@ -30,10 +30,11 @@
         <!--Если пользователь зарегистрирован он не видит Вход и Регистрация-->
         {% if user.is_authenticated %}
         <span class="navbar-text mr-2">{{ user }}</span>
+        <a href="{% url 'forum' %}" class="btn btn-outline-light mr-2">Форум</a>
         <a href="{% url 'signout' %}?next={{ request.path }}" class="btn btn-outline-light">Выход</a>
         {% else %}
-        <a href="{% url 'signin' %}?next={{ request.path }}" class="btn btn-outline-light mr-2">Вход</a>
-        <a href="{% url 'signup' %}?next={{ request.path }}" class="btn btn-outline-light mr-2">Регистрация</a>
+        <a href="{% url 'signin' %}" class="btn btn-outline-light mr-2">Вход</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-light mr-2">Регистрация</a>
         {% endif %}
     </div>
 </nav>
