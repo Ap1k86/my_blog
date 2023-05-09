@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Comment
+from .models import *
+from datetime import date
 
 
 # Форма регистрации.
@@ -94,9 +95,39 @@ class CommentForm(forms.ModelForm):
 
 # Форма поста на форуме.
 class PostForForum(forms.ModelForm):
-    pass
+    class Meta:
+        model = ForumPost
+        fields = ['title', 'url', 'author', 'content', 'image', 'created_at']
 
 
-# Форма комментария.
+# title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
+#     'class': 'form-control',
+#     'id': 'name',
+#     'placeholder': "Название темы"
+# }))
+#
+# # Основная мысль поста
+# content = forms.CharField(widget=forms.Textarea(attrs={
+#     'class': 'form-control md-textarea',
+#     'id': 'message',
+#     'rows': 4,  # Количество строк которые занимает текст.
+#     'placeholder': "Ваша тема"
+# }))
+#
+# # Загрузить фото
+# img = forms.FileField(label="Загрузить фото", required=False,
+#                       widget=forms.FileInput(attrs={'class': 'form-control'}))
+#
+
+
+# Форма комментария на форуме.
 class CommentFormForForum(forms.ModelForm):
-    pass
+    class Meta:
+        model = CommentForum
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3
+            }),
+        }

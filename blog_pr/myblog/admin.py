@@ -1,3 +1,4 @@
+import requests
 from django.contrib import admin
 from .models import *
 
@@ -13,14 +14,22 @@ class PostAdmin(admin.ModelAdmin):
 # Зарегистрировал модель Comment в админке.
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('post', 'username', 'text', 'created_date')
+    fields = ['post', 'username', 'text', 'created_date']
+    exclude = ['', ]
 
 
 @admin.register(ForumPost)
 class ForumPostAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {'url': ('title',)}
+    list_display = ('title', 'content', 'created_at', 'author')
 
 
 @admin.register(CommentForum)
 class CommentForum(admin.ModelAdmin):
-    pass
+    list_display = ('post', 'username', 'text', 'created_date')
+    exclude = ['', ]
+
+
+# Почитать на досуге.
+# https://docs.djangoproject.com/en/4.2/ref/contrib/admin/

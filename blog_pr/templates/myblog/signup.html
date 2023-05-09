@@ -2,32 +2,48 @@
 {% load static %}
 {% block title %}Регистрация{% endblock %}
 
+{% block header %}
+{% include './block/header.html' %}
+{% endblock %}
+
 {% block content %}
-<div class="text-center">
-    {% if form.errors %}
-    {% for field in form %}
-    {% for error in field.errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Регистрация</li>
+                </ol>
+            </nav>
+            <div class="text-center">
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form class="col-md-4 mb-3 mx-auto" method="post" action="{% url 'signup' %}?next={{ request.path }}">
+                    {% csrf_token %}
+                    <h1 class="h3 mb-3 mt-3 font-weight-normal">Для регистрации укажите имя пользователя и пароль</h1>
+                    <label for="inputUsername" class="mx-auto">Имя пользователя</label>
+                    {{ form.username }}
+                    <label for="inputPassword" class="mx-auto">Пароль</label>
+                    {{ form.password }}
+                    <label for="ReInputPassword" class="mx-auto">Повторите пароль</label>
+                    {{ form.repeat_password }}
+                    <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Регистрация</button>
+                </form>
+            </div>
+        </div>
     </div>
-    {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-    <div class="alert alert-danger">
-        <strong>{{ error|escape }}</strong>
-    </div>
-    {% endfor %}
-    {% endif %}
-    <form class="col-md-4 mb-3 mx-auto" method="post" action="{% url 'signup' %}?next={{ request.path }}">
-        {% csrf_token %}
-        <h1 class="h3 mb-3 mt-3 font-weight-normal">Для регистрации укажите имя пользователя и пароль</h1>
-        <label for="inputUsername" class="mx-auto">Имя пользователя</label>
-        {{ form.username }}
-        <label for="inputPassword" class="mx-auto">Пароль</label>
-        {{ form.password }}
-        <label for="ReInputPassword" class="mx-auto">Повторите пароль</label>
-        {{ form.repeat_password }}
-        <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Регистрация</button>
-    </form>
 </div>
 {% endblock %}

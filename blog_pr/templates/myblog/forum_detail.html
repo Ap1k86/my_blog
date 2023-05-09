@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends './base.html' %}
+{% load static %}
+
+<!--передаю в название заголовок открытого поста.-->
+{% block title %}{{ post.title }}{% endblock title %}
+
+{% block header %}
+{% include './block/header.html' %}
+{% endblock %}
+
+{% block pagination_1 %}
+{% endblock pagination_1 %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ forum_post.h1 }}</li>
+                </ol>
+            </nav>
+            <hr>
+            <p class="lead">
+                <!--|truncatechars:2500 - ограничение количества символов в посте.(отрежет aside-->
+                {{ forum_post.content|safe }}
+            </p>
+            {% include './block/comments_forum.html' %}
+        </div>
+        {% include './block/aside.html' %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block pagination_2 %}
+{% endblock pagination_2 %}

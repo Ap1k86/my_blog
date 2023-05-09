@@ -1,29 +1,29 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.core.paginator import Paginator
-from .models import *
 from .forms import *
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.core.mail import send_mail, BadHeaderError
 from django.db.models import Q  # нужна для построения QuerySet "Магия"
 
 
 # https://docs.djangoproject.com/en/4.2/topics/class-based-views/
-# Основная страница.
+# Обработка главной страницы.
 class MainView(View):
 
-    def get(self, request, *args, **kwargs):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        # Принимаю данные блога.
         posts = Post.objects.all()
-        posts_forum = ForumPost.objects.all()
-
         paginator = Paginator(posts, 6)
-        paginator_forum = Paginator(posts_forum, 6)
-
         page_number = request.GET.get('page')
-        page_number_forum = request.GET.get('page')
-
         page_obj = paginator.get_page(page_number)
+
+        # Принимаю данные форума.
+        posts_forum = ForumPost.objects.all()
+        paginator_forum = Paginator(posts_forum, 3)  # Для последних записей блога.
+        page_number_forum = request.GET.get('page')
         page_obj_forum = paginator_forum.get_page(page_number_forum)
 
         context = {
@@ -33,7 +33,7 @@ class MainView(View):
         return render(request, 'myblog/home.html', context=context)
 
 
-# Страница поста.
+# Обработка страницы поста.
 class PostDetailView(View):
     def get(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, url=slug)
@@ -66,6 +66,7 @@ class SignUpView(View):
     def get(self, request, *args, **kwargs):
         form = SigUpForm()
         context = {
+            'title': 'Регистрация',
             'form': form,
         }
         return render(request, 'myblog/signup.html', context=context)
@@ -90,6 +91,7 @@ class SignInView(View):
     def get(self, request, *args, **kwargs):
         form = SignInForm()
         context = {
+            'title': 'Авторизация',
             'form': form,
         }
         return render(request, 'myblog/signin.html', context=context)
@@ -170,39 +172,91 @@ class SearchResultsView(View):
         return render(request, 'myblog/search.html', context=context)
 
 
-# Обработка страницы форуму
+# Обработка страницы форума
 class ForumView(View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all()
         posts_forum = ForumPost.objects.all()
-
-        paginator = Paginator(posts, 6)
         paginator_forum = Paginator(posts_forum, 6)
-
-        page_number = request.GET.get('page')
         page_number_forum = request.GET.get('page')
-
-        page_obj = paginator.get_page(page_number)
         page_obj_forum = paginator_forum.get_page(page_number_forum)
 
         context = {
             'title': 'Форум',
-            'page_obj': page_obj,
+            'page_obj_forum': page_obj_forum,
+        }
+        return render(request, 'myblog/forum.html', context=context)
+
+    def post(self, request):
+        posts_forum = ForumPost.objects.all()
+        paginator_forum = Paginator(posts_forum, 6)
+        page_number_forum = request.GET.get('page')
+        page_obj_forum = paginator_forum.get_page(page_number_forum)
+
+        context = {
+            'title': 'Форум',
             'page_obj_forum': page_obj_forum,
         }
         return render(request, 'myblog/forum.html', context=context)
 
 
-#
+# Обработка страницы поста на форуме.
 class ForumDetailView(View):
-    def get(self, request):
-        context = {
-            'title': 'Форум'  # То что пишет в хедере
-        }
-        return render(request, 'myblog/forum.html', context=context)
 
-    def post(self, request):
+    def get(self, request, slug, *args, **kwargs):
+        forum_post = get_object_or_404(ForumPost, url=slug)
+        comment_form_forum = CommentFormForForum()
+
         context = {
-            'title': 'Форум'  # То что пишет в хедере
+            'title': 'Форум',  # То что пишет в хедере
+            'forum_post': forum_post,
+            'comment_form_forum': comment_form_forum,
         }
-        return render(request, 'myblog/forum.html', context=context)
+        return render(request, 'myblog/forum_detail.html', context=context)
+
+    def post(self, request, slug, *args, **kwargs):
+        comment_form_forum = CommentFormForForum(request.POST)
+        if comment_form_forum.is_valid():
+            text = request.POST['text']
+            username = self.request.user
+            post = get_object_or_404(ForumPost, url=slug)  # , url=  Найти.
+            comment = Comment.objects.create(post=post, username=username, text=text)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+        context = {
+            'title': 'Форум',  # То что пишет в хедере
+            'comment_form_forum': comment_form_forum,
+        }
+        return render(request, 'myblog/forum_detail.html', context=context)
+
+
+# Обработка страницы добавления темы на форум.
+class AddTheme(View):
+    def get(self, request, *args, **kwargs):
+        form = PostForForum()
+        context = {
+            'title': 'Добавить тему на форум',
+            'form': form,
+        }
+        return render(request, 'myblog/add.html', context=context)
+
+    def post(self, request, *args, **kwargs):
+        form = PostForForum(request.POST or None, request.FILES)
+        form.save()
+        if form.is_valid():
+            form.save()
+            print('yes')
+            return HttpResponseRedirect('success')
+
+        context = {
+            'title': 'Добавили тему на форум',
+            'form': form
+        }
+        return render(request, 'myblog/add.html', context=context)
+
+
+# Для обработки ошибки 404. !Починить!
+# def pageNotFound(request, exception):
+#     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+# Руководство по slug.
+# https://django.fun/ru/articles/tutorials/rukovodstvo-po-slagam-django/

@@ -18,6 +18,7 @@
             </nav>
             <p class="lead">Найдено записей: {{ count }}</p>
             {% for result in results %}
+            <a href=""><img src="media/{{ result.img }}" alt="" class="card-img-top foto"></a>
             <a href="{% url 'post_detail' slug=result.url %}"><h2>{{ result.h1 }}</h2></a>
             <p>{{ result.description|safe }}</p>
             <p>{{ result.options|safe }}</p>

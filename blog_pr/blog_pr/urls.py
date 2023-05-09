@@ -8,8 +8,11 @@ urlpatterns = [
     path('', include('myblog.urls')),
     path('admin/', admin.site.urls),
     path("ckeditor/", include('ckeditor_uploader.urls')),
-    path('forum/', ForumView.as_view(), name='forum'),
 ]  # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# Ловим пустые страницы.
+# handler404 = pageNotFound
