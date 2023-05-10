@@ -11,8 +11,8 @@ urlpatterns = [
                   path('', MainView.as_view(), name='index'),
 
                   # Маршрут: страницы детализации поста.!!! Два маршрута делаю для себя !!!
-                  # path('blog/<slug>/', PostDetailView.as_view(), name='post_detail'),
-                  re_path(r'^blog/(?P<slug>\D+)', PostDetailView.as_view(), name='post_detail'),
+                  path('blog/<slug>/', PostDetailView.as_view(), name='post_detail'),
+                  # re_path(r'^blog/(?P<slug>\D+)', PostDetailView.as_view(), name='post_detail'),
 
                   # Маршрут: страницы регистрации, 2 варианта пути.
                   # path('signup/', SignUpView.as_view(), name='signup'),
@@ -41,15 +41,15 @@ urlpatterns = [
 
                   # Маршрут: страницы форума, 2 варианта.
                   path('forum/', ForumView.as_view(), name='forum'),
-                  # re_path(r'^forum/', ForumView.as_view(), name='forum'),
+                  # re_path(r'^forum', ForumView.as_view(), name='forum'),
 
                   # Маршрут: Страница добавления поста на форум.
-                  # path('forum/add_theme/', AddTheme.as_view(), name='theme_add'),
-                  re_path(r'^forum/add_theme/', AddTheme.as_view(), name='theme_add'),
+                  path('forum/add_theme/', AddTheme.as_view(), name='theme_add'),
+                  # re_path(r'^forum/add_theme/', AddTheme.as_view(), name='theme_add'),
 
                   # # Маршрут: страницы детализации поста на форуме.
                   path('forum/<slug>/', ForumDetailView.as_view(), name='forum_detail'),
-                  # # re_path(r'^forum/(?P<slug>\D+)', ForumDetailView.as_view(), name='forum_detail'),
+                  # re_path(r'^forum/(?P<slug>\D+)', ForumDetailView.as_view(), name='forum_detail'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

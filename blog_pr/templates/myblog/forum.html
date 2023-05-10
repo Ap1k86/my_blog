@@ -49,7 +49,7 @@
             {{ post_forum.title }}
             <div class="row">
                 <div class="col-8 col-sm-4">
-                    <a href="% url 'forum_detail' slug=post_forum.url %}"><img src="/media/{{ post_forum.image }}" alt=""
+                    <a href="{% url 'forum_detail' slug=post_forum.url %}"><img src="/media/{{ post_forum.image }}" alt=""
                                     class="card-img-top foto"></a>
                 </div>
                 <div class="col-4 col-sm-8">

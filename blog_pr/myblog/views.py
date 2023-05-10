@@ -48,14 +48,17 @@ class PostDetailView(View):
 
     def post(self, request, slug, *args, **kwargs):
         comment_form = CommentForm(request.POST)
+        last_posts = Post.objects.all().order_by('-id')[:5]
         if comment_form.is_valid():
             text = request.POST['text']
             username = self.request.user
             post = get_object_or_404(Post, url=slug)
-            comment = Comment.objects.create(post=post, username=username, text=text)
+            comment = Comment.objects.create(post=post, username=username, text=text)  # Сохраняю в бд комментарий
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         context = {
-            'comment_form': comment_form
+            'comment_form': comment_form,
+            'last_posts': last_posts,
+            'comment': CommentForum.objects.all()
         }
         return render(request, 'myblog/post_detail.html', context=context)
 
@@ -159,7 +162,7 @@ class SearchResultsView(View):
         if query:
             results = Post.objects.filter(
                 # Ищем по заголовку 'h1' и специальному полю 'keyword'
-                Q(h1__icontains=query) | Q(keyword__icontains=query)
+                Q(title__icontains=query) | Q(keyword__icontains=query)
             )
         paginator = Paginator(results, 6)
         page_number = request.GET.get('page')
@@ -201,14 +204,15 @@ class ForumView(View):
 
 # Обработка страницы поста на форуме.
 class ForumDetailView(View):
-
     def get(self, request, slug, *args, **kwargs):
-        forum_post = get_object_or_404(ForumPost, url=slug)
+        post = get_object_or_404(ForumPost, url=slug)
+        last_posts = ForumPost.objects.all().order_by('-id')[:5]
         comment_form_forum = CommentFormForForum()
-
+        title = post.title  # Вывожу заголовок рассматриваемого поста на форуме
         context = {
-            'title': 'Форум',  # То что пишет в хедере
-            'forum_post': forum_post,
+            'title': title,  # То что пишет в хедере
+            'post': post,
+            'last_posts': last_posts,
             'comment_form_forum': comment_form_forum,
         }
         return render(request, 'myblog/forum_detail.html', context=context)
@@ -219,7 +223,7 @@ class ForumDetailView(View):
             text = request.POST['text']
             username = self.request.user
             post = get_object_or_404(ForumPost, url=slug)  # , url=  Найти.
-            comment = Comment.objects.create(post=post, username=username, text=text)
+            comment = CommentForum.objects.create(post=post, username=username, text=text)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
         context = {

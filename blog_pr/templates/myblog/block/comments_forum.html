@@ -20,7 +20,7 @@
 </div>
 
 <!--Если есть комментарии, то будут отображаться-->
-{% for comment in forum_post.comments.all %}
+{% for comment in post.comments.all %}
 <div class="media mb-4">
     <img class="d-flex mr-3 rounded-circle" src="{% static '/img/avatar.jpg' %}" alt="">
     <div class="media-body">
