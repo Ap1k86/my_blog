@@ -32,15 +32,15 @@ urlpatterns = [
                   re_path(r'^contact/', FeedBackView.as_view(), name='contact'),
 
                   # Маршрут: страницы благодарности за написанное письмо.
-                  # path('contact/success/', SuccessView.as_view(), name='success'),
-                  re_path(r'^contact/success/', SuccessView.as_view(), name='success'),
+                  path('contact/success/', SuccessView.as_view(), name='success'),
+                  # re_path(r'^contact/success/', SuccessView.as_view(), name='success'),
 
                   # Маршрут: страницы поиска, 2 варианта.
                   # path('search/', SearchResultsView.as_view(), name='search_results'),
                   re_path(r'^search/', SearchResultsView.as_view(), name='search_results'),
 
                   # Маршрут: страницы форума, 2 варианта.
-                  path('forum/', ForumView.as_view(), name='forum'),
+                  path('/forum/', ForumView.as_view(), name='forum'),
                   # re_path(r'^forum', ForumView.as_view(), name='forum'),
 
                   # Маршрут: Страница добавления поста на форум.

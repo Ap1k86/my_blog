@@ -29,7 +29,7 @@ class Post(models.Model):
 
 # Модель комментарии.
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='Текст:')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', verbose_name='Текст:')
     username = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Имя:')
     text = models.TextField(verbose_name='Комментарий:')
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания:')
@@ -60,7 +60,8 @@ class ForumPost(models.Model):
 
     # Хз зачем Оно :)
     def __repr__(self):
-        return 'ForumPost(%s, %s, %s, %s, %s)' % (self.title, self.url, self.content, self.image, self.author)
+        return 'ForumPost(%s, %s, %s, %s, %s, %s)' % (
+            self.title, self.url, self.content, self.image, self.created_at, self.author)
 
     def __str__(self):
         return self.title

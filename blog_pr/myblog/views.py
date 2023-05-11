@@ -42,13 +42,13 @@ class PostDetailView(View):
         context = {
             'post': post,
             'last_posts': last_posts,
-            'comment_form': comment_form
+            'comment_form': comment_form,
+            'comment': CommentForum.objects.all()
         }
         return render(request, 'myblog/post_detail.html', context=context)
 
     def post(self, request, slug, *args, **kwargs):
         comment_form = CommentForm(request.POST)
-        last_posts = Post.objects.all().order_by('-id')[:5]
         if comment_form.is_valid():
             text = request.POST['text']
             username = self.request.user
@@ -57,8 +57,6 @@ class PostDetailView(View):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         context = {
             'comment_form': comment_form,
-            'last_posts': last_posts,
-            'comment': CommentForum.objects.all()
         }
         return render(request, 'myblog/post_detail.html', context=context)
 
@@ -245,11 +243,9 @@ class AddTheme(View):
 
     def post(self, request, *args, **kwargs):
         form = PostForForum(request.POST or None, request.FILES)
-        form.save()
         if form.is_valid():
             form.save()
-            print('yes')
-            return HttpResponseRedirect('success')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
         context = {
             'title': 'Добавили тему на форум',

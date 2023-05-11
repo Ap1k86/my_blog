@@ -20,12 +20,12 @@
 </div>
 
 <!--Если есть комментарии, то будут отображаться-->
-{% for comment in last_posts %}
+{% for comment in post.comments.all %}
 <div class="media mb-4">
     <img class="d-flex mr-3 rounded-circle" src="{% static '/img/avatar.jpg' %}" alt="">
     <div class="media-body">
-        <h5 class="mt-0">{{ comment.username }}</h5>
-        {{ comment.text }}
+        <h5 class="mt-0">{{comment.username}}</h5>
+        {{comment.text}}
     </div>
 </div>
 {% endfor %}
