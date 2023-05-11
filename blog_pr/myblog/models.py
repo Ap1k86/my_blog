@@ -48,7 +48,7 @@ class Comment(models.Model):
 class ForumPost(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок:")
     url = AutoSlugField(unique=True, verbose_name='URL-адрес(авто):')  # https://pypi.org/project/django-autoslug/
-    content = RichTextUploadingField(verbose_name="Описание:")
+    content = models.TextField(verbose_name="Описание:")
     image = models.ImageField(upload_to='forum', verbose_name='Фото:')
     created_at = models.DateField(default=timezone.now, verbose_name='Дата создания поста:')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор:", default=User.objects.all)

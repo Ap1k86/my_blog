@@ -12,7 +12,7 @@
         <div class="col-lg-12">
             <nav aria-label="breadcrumb" class="mt-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item"><a class="dark" href="{% url 'index' %}">Главная</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Регистрация</li>
                 </ol>
             </nav>
@@ -40,7 +40,7 @@
                     {{ form.password }}
                     <label for="ReInputPassword" class="mx-auto">Повторите пароль</label>
                     {{ form.repeat_password }}
-                    <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Регистрация</button>
+                    <button class="btn mt-2 btn-lg btn-dark btn-block" type="submit">Регистрация</button>
                 </form>
             </div>
         </div>

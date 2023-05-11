@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import *
-from datetime import date
+from datetime import date, datetime
 
 
 # Форма регистрации.
@@ -98,6 +98,25 @@ class PostForForum(forms.ModelForm):
     class Meta:
         model = ForumPost
         fields = ['title', 'url', 'author', 'content', 'image', 'created_at']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'name',
+                'placeholder': "Заголовок"
+            }),
+            'url': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'name',
+                'placeholder': "Заголовок на английском"
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+            }),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+
+            'created_at': forms.DateInput(attrs={'type': "date"}),
+        }
 
 
 # title = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
@@ -117,7 +136,6 @@ class PostForForum(forms.ModelForm):
 # # Загрузить фото
 # img = forms.FileField(label="Загрузить фото", required=False,
 #                       widget=forms.FileInput(attrs={'class': 'form-control'}))
-#
 
 
 # Форма комментария на форуме.

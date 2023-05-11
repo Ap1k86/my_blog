@@ -12,8 +12,8 @@
         <div class="col-lg-12">
             <nav aria-label="breadcrumb" class="mt-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'forum' %}">Форум</a></li>
+                    <li class="breadcrumb-item"><a class="dark" href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item"><a class="dark" href="{% url 'forum' %}">Форум</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Добавление темы на форум</li>
                 </ol>
             </nav>
@@ -37,6 +37,7 @@
                 <!--enctype="multipart/form-data"  Для загрузки картинок из формы-->
                 {% csrf_token %}
                 {{ form.as_p }}
+                <input type="hidden" name="author">
                 <div class="text-center text-md-left mt-3">
                     <button class="btn btn-primary" type="submit">Отправить</button>
                 </div>
