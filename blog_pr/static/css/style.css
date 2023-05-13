@@ -1,5 +1,5 @@
 body {
-    margin-bottom: 60px; /* Margin bottom by footer height */
+    margin-bottom: 60px; /* Не работает)) */
 }
 
 html {
@@ -42,17 +42,17 @@ footer {
     margin: 0 auto;
 }
 
-/* Размер фотографии в иконке*/
+/* Размер фотографии в иконке */
 .foto {
 height: 250px;
 }
 
-/* Размер окна в иконках*/
+/* Размер окна в иконках */
 .for_content {
-height: 450px;
+height: 420px;
 }
 
-/* Цвет текста*/
+/* Цвет текста */
 .dark {
 	color: black;
 }

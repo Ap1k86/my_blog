@@ -28,8 +28,8 @@ urlpatterns = [
                           name='signout'),
 
                   # Маршрут: страницы обратной связи, 2 варианта.
-                  # path('contact/', FeedBackView.as_view(), name='contact'),
-                  re_path(r'^contact/', FeedBackView.as_view(), name='contact'),
+                  path('contact/', FeedBackView.as_view(), name='contact'),
+                  # re_path(r'^contact/', FeedBackView.as_view(), name='contact'),
 
                   # Маршрут: страницы благодарности за написанное письмо.
                   path('contact/success/', SuccessView.as_view(), name='success'),
@@ -42,6 +42,10 @@ urlpatterns = [
                   # Маршрут: страницы форума, 2 варианта.
                   path('forum/', ForumView.as_view(), name='forum'),
                   # re_path(r'^forum', ForumView.as_view(), name='forum'),
+
+                  # Маршрут: страницы благодарности за написанный пост.
+                  path('forum/add_theme/success_post/', SuccessPostView.as_view(), name='success_post'),
+                  # re_path(r'^forum/success/', SuccessPostView.as_view(), name='success_post'),
 
                   # Маршрут: Страница добавления поста на форум.
                   path('forum/add_theme/', AddTheme.as_view(), name='theme_add'),

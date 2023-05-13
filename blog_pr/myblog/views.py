@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from .forms import *
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
-from django.core.mail import send_mail, BadHeaderError
+from django.core.mail import send_mail, BadHeaderError  # Для работы почты
 from django.db.models import Q  # нужна для построения QuerySet "Магия"
 
 
@@ -40,6 +40,7 @@ class PostDetailView(View):
         last_posts = Post.objects.all().order_by('-id')[:5]
         comment_form = CommentForm()
         context = {
+            'title': post.title,
             'post': post,
             'last_posts': last_posts,
             'comment_form': comment_form,
@@ -143,13 +144,22 @@ class FeedBackView(View):
         return render(request, 'myblog/contact.html', context=context)
 
 
-# Обработка страницы благодарности.
+# Обработка страницы благодарности на письмо.
 class SuccessView(View):
     def get(self, request, *args, **kwargs):
         context = {
-            'title': 'Спасибо'
+            'title': 'Ваше письмо отправлено. Спасибо!'
         }
         return render(request, 'myblog/success.html', context=context)
+
+
+# Обработка страницы благодарности на пост.
+class SuccessPostView(View):
+    def get(self, request, *args, **kwargs):
+        context = {
+            'title': 'Ваш пост опубликован. Спасибо!'
+        }
+        return render(request, 'myblog/success_post.html', context=context)
 
 
 # Обработка страницы поиска.
@@ -233,6 +243,7 @@ class ForumDetailView(View):
 
 # Обработка страницы добавления темы на форум.
 class AddTheme(View):
+
     def get(self, request, *args, **kwargs):
         form = PostForForum()
         context = {
@@ -245,7 +256,7 @@ class AddTheme(View):
         form = PostForForum(request.POST or None, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+            return HttpResponseRedirect('success_post')
 
         context = {
             'title': 'Добавили тему на форум',
@@ -255,8 +266,8 @@ class AddTheme(View):
 
 
 # Для обработки ошибки 404. !Починить!
-# def pageNotFound(request, exception):
-#     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+def pageNotFound(request, exception):
+    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 # Руководство по slug.
 # https://django.fun/ru/articles/tutorials/rukovodstvo-po-slagam-django/

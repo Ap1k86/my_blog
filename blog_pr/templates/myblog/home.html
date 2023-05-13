@@ -23,16 +23,16 @@
             {% endif %}
             {% for i in page_obj.paginator.page_range %}
             {% if i == page_obj.number %}
-            <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            <li class="page-item active"><a class="btn btn-success" href="?page={{ i }}">{{ i }}</a></li>
             {% else %}
-            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            <li class="page-item"><a class="page-link dark" href="?page={{ i }}">{{ i }}</a></li>
             {% endif %}
             {% endfor %}
             {% if page_obj.has_next %}
             <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
             {% else %}
             <li class="page-item disabled">
-                <a class="page-link" href="#">Следующая</a>
+                <a class="page-link dark" href="#">Следующая</a>
             </li>
             {% endif %}
         </ul>
@@ -58,11 +58,15 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ post.h1 }}</h4>
                     {{ post.description|safe|truncatechars:100 }}
+                    <br>
+                    <br>
                     <div class="d-flex justify-content-between align-items-center">
-                        <!--                        <div class="btn-group">-->
-                        <!--                            <a href="{% url 'post_detail' slug=post.url %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>-->
-                        <!--                        </div>-->
-                        <small class="text-muted">{{ post.created_at }}</small>
+                         <div class="btn-group">
+                            <small class="text-muted"> </small> <!--Это для отступа, не удалять!-->
+                        </div>
+                        <div>
+                            <small class="text-muted">Дата: {{ post.created_at }}</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +82,7 @@
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
         <!--page_obj_forum вместо page_obj для форума(если понадобится)-->
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
+        <a class="page-link dark" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
         {% else %}
         <li class="page-item disabled">
             <a class="page-link disabled" href="#" tabindex="-1">Предыдущая</a>
@@ -86,16 +90,16 @@
         {% endif %}
         {% for i in page_obj.paginator.page_range %}
         {% if i == page_obj.number %}
-        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        <li class="page-item active"><a class="btn btn-success" href="?page={{ i }}">{{ i }}</a></li>
         {% else %}
-        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        <li class="page-item"><a class="page-link dark" href="?page={{ i }}">{{ i }}</a></li>
         {% endif %}
         {% endfor %}
         {% if page_obj.has_next %}
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+        <a class="page-link dark" href="?page={{ page_obj.next_page_number }}">Следующая</a>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" href="#">Следующая</a>
+            <a class="page-link dark" href="#">Следующая</a>
         </li>
         {% endif %}
     </ul>
@@ -116,12 +120,18 @@
         {% for post in page_obj_forum %}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm for_content">
-                <a href="{% url 'forum_detail' slug=post.url %}"><img src="media/{{ post.image }}" alt="" class="card-img-top foto"></a>
+                <a href="{% url 'forum_detail' slug=post.url %}"><img src="media/{{ post.image }}" alt=""
+                                                                      class="card-img-top foto"></a>
                 <div class="card-body">
                     <h4 class="card-title">{{ post.title }}</h4>
                     {{ post.content|safe|truncatechars:100 }}
                     <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">{{ post.created_at }}</small>
+                        <div class="btn-group">
+                            <small class="text-muted">Автор: {{ post.author }}</small>
+                        </div>
+                        <div>
+                            <small class="text-muted">Дата: {{ post.created_at }}</small>
+                        </div>
                     </div>
                 </div>
             </div>

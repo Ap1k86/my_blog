@@ -47,11 +47,11 @@ class Comment(models.Model):
 # Модель постов на форуме.
 class ForumPost(models.Model):
     title = models.CharField(max_length=200, verbose_name="Заголовок:")
-    url = AutoSlugField(unique=True, verbose_name='URL-адрес(авто):')  # https://pypi.org/project/django-autoslug/
+    url = AutoSlugField(unique=True, verbose_name='Заголовок на английском')  # https://pypi.org/project/django-autoslug/
     content = models.TextField(verbose_name="Описание:")
     image = models.ImageField(upload_to='forum', verbose_name='Фото:')
     created_at = models.DateField(default=timezone.now, verbose_name='Дата создания поста:')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор:", default=User.objects.all)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор:")
     objects = models.Model
 
     class Meta:

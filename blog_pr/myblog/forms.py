@@ -97,7 +97,7 @@ class CommentForm(forms.ModelForm):
 class PostForForum(forms.ModelForm):
     class Meta:
         model = ForumPost
-        fields = ['title', 'url', 'author', 'content', 'image', 'created_at']
+        fields = ['title', 'url', 'content', 'image', 'created_at', 'author']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -113,9 +113,12 @@ class PostForForum(forms.ModelForm):
                 'class': 'form-control',
                 'rows': 3,
             }),
-            'image': forms.FileInput(attrs={'class': 'form-control'}),
-
-            'created_at': forms.DateInput(attrs={'type': "date"}),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control'
+            }),
+            'created_at': forms.DateInput(attrs={
+                'type': "date"
+            }),
         }
 
 
