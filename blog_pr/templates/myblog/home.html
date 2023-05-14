@@ -15,7 +15,7 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <!--page_obj_forum вместо page_obj для форума(если понадобится)-->
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
+            <a class="page-link dark" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдущая</a>
             {% else %}
             <li class="page-item disabled">
                 <a class="page-link disabled" href="#" tabindex="-1">Предыдущая</a>
@@ -29,7 +29,7 @@
             {% endif %}
             {% endfor %}
             {% if page_obj.has_next %}
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            <a class="page-link dark" href="?page={{ page_obj.next_page_number }}">Следующая</a>
             {% else %}
             <li class="page-item disabled">
                 <a class="page-link dark" href="#">Следующая</a>
