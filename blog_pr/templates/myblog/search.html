@@ -18,12 +18,31 @@
             </nav>
             <p class="lead">Найдено записей: {{ count }}</p>
             {% for result in results %}
-            <a href=""><img src="media/{{ result.img }}" alt="" class="card-img-top foto"></a>
-            <a href="{% url 'post_detail' slug=result.url %}"><h2>{{ result.h1 }}</h2></a>
-            <p>{{ result.description|safe }}</p>
-            <p>{{ result.options|safe }}</p>
-            <p>Дата создания: {{ result.created_at|safe }}</p>
-            <p>Автор: {{ result.author|safe }}</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <br>
+                        <a href="{% url 'post_detail' slug=result.url %}"><img src="/media/{{ result.image }}" alt=""
+                                                                               class="card-img-top foto"></a></div>
+                    <div class="col-8">
+                        <p>{{ result.description|safe }}</p>
+                        <p>{{ result.options|safe }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+
+                    </div>
+                    <div class="col-2">
+                        <p>Автор: {{ result.author|safe }}</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Дата создания: {{ result.created_at|safe }}</p>
+                    </div>
+                </div>
+            </div>
+
+
             <hr>
             {% endfor %}
         </div>
