@@ -57,6 +57,7 @@ class ForumPost(models.Model):
     class Meta:
         verbose_name = 'Пост на форуме'
         verbose_name_plural = 'Посты на форуме'
+        ordering = ['-created_at']
 
     # Хз зачем Оно :)
     def __repr__(self):

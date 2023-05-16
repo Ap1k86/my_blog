@@ -162,7 +162,7 @@ class SuccessPostView(View):
         return render(request, 'myblog/success_post.html', context=context)
 
 
-# Обработка страницы поиска.
+# Обработка страницы поиска главной страницы.
 class SearchResultsView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')  # АААААААААААА
@@ -172,15 +172,36 @@ class SearchResultsView(View):
                 # Ищем по заголовку 'h1' и специальному полю 'keyword'
                 Q(title__icontains=query) | Q(keyword__icontains=query)
             )
-        paginator = Paginator(results, 6)
+        paginator = Paginator(results, 3)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {
-            'title': 'Поиск',
+            'title': 'Поиск по главной странице',
             'results': page_obj,
             'count': paginator.count
         }
         return render(request, 'myblog/search.html', context=context)
+
+
+# Обработка страницы поиска на форуме.
+class SearchResultsForumView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        results = ""
+        if query:
+            results = ForumPost.objects.filter(
+                # Ищем по заголовку 'h1' и специальному полю 'keyword'
+                Q(title__icontains=query)
+            )
+        paginator = Paginator(results, 3)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {
+            'title': 'Поиск по постам на форуме',
+            'results': page_obj,
+            'count': paginator.count
+        }
+        return render(request, 'myblog/search_2.html', context=context)
 
 
 # Обработка страницы форума

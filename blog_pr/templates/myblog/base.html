@@ -13,8 +13,9 @@
 </head>
 <body>
 <!--Подключаем верхнюю панель-->
+{% block navbar %}
 {% include './block/navbar.html' %}
-
+{% endblock navbar %}
 <!--Сюда вставляем хедер, если он нужен(Темная полоска с надписью) !Сделать меньше!-->
 {% block header %}{% endblock header %}
 

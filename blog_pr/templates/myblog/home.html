@@ -119,7 +119,7 @@
     <div class="row">
         {% for post in page_obj_forum %}
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm for_content">
+            <div class="card mb-4 shadow-sm for_content_forum">
                 <a href="{% url 'forum_detail' slug=post.url %}"><img src="media/{{ post.image }}" alt=""
                                                                       class="card-img-top foto"></a>
                 <div class="card-body">

@@ -1,9 +1,12 @@
 {% extends './base.html' %}
 {% load static %}
 {% block title %}Поиск{% endblock %}
+{% block navbar %}
+{% include './block/navbar_forum.html' %}
+{% endblock navbar %}
 
 {% block header %}
-{% include './block/search_form.html' %}
+{% include './block/search_form_forum.html' %}
 {% endblock %}
 
 {% block content %}
@@ -12,17 +15,37 @@
         <div class="col-lg-12">
             <nav aria-label="breadcrumb" class="mt-4">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item"><a class="dark" href="{% url 'index' %}">Главная</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Поиск</li>
                 </ol>
             </nav>
             <p class="lead">Найдено записей: {{ count }}</p>
             {% for result in results %}
-            <a href="{% url 'post_detail' slug=result.url %}"><h2>{{ result.h1 }}</h2></a>
-            <p>{{ result.description|safe }}</p>
-            <p>{{ result.options|safe }}</p>
-            <p>Дата создания: {{ result.created_at|safe }}</p>
-            <p>Автор: {{ result.author|safe }}</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <br>
+                        <a href="{% url 'forum_detail' slug=result.url %}"><img src="/media/{{ result.image }}" alt=""
+                                                                               class="card-img-top foto"></a></div>
+                    <div class="col-8">
+                        <p>{{ result.title|safe }}</p>
+                        <p>{{ result.content|safe }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+
+                    </div>
+                    <div class="col-2">
+                        <p>Автор: {{ result.author|safe }}</p>
+                    </div>
+                    <div class="col-3">
+                        <p>Дата создания: {{ result.created_at|safe }}</p>
+                    </div>
+                </div>
+            </div>
+
+
             <hr>
             {% endfor %}
         </div>
@@ -35,7 +58,7 @@
 <nav aria-label="Paginate me">
     <ul class="pagination justify-content-center">
         {% if results.has_previous %}
-        <a class="page-link"
+        <a class="page-link dark"
            href="?page={{ results.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
            tabindex="-1">Предыдущая</a>
         {% else %}
@@ -46,21 +69,21 @@
         {% for i in results.paginator.page_range %}
         {% if i == results.number %}
         <li class="page-item active">
-            <a class="page-link" href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
+            <a class="btn btn-success" href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
         </li>
         {% else %}
-        <li class="page-item"><a class="page-link"
+        <li class="page-item"><a class="page-link dark"
                                  href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
         </li>
         {% endif %}
         {% endfor %}
         <!--Если что-то нашло.-->
         {% if results.has_next %}
-        <a class="page-link"
+        <a class="page-link dark"
            href="?page={{ results.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Следующая</a>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" href="#">Следующая</a>
+            <a class="page-link dark" href="#">Следующая</a>
         </li>
         {% endif %}
     </ul>

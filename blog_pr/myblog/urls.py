@@ -14,11 +14,11 @@ urlpatterns = [
                   path('blog/<slug>/', PostDetailView.as_view(), name='post_detail'),
                   # re_path(r'^blog/(?P<slug>\D+)', PostDetailView.as_view(), name='post_detail'),
 
-                  # Маршрут: страницы регистрации, 2 варианта пути.
+                  # Маршрут: страницы регистрации
                   # path('signup/', SignUpView.as_view(), name='signup'),
                   re_path(r'^signup', SignUpView.as_view(), name='signup'),
 
-                  # Маршрут: страницы авторизации, 2 варианта.
+                  # Маршрут: страницы авторизации
                   # path('signin/', SignInView.as_view(), name='signin'),
                   re_path(r'^signin/', SignInView.as_view(), name='signin'),
 
@@ -27,7 +27,7 @@ urlpatterns = [
                   re_path(r'^signout', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},
                           name='signout'),
 
-                  # Маршрут: страницы обратной связи, 2 варианта.
+                  # Маршрут: страницы обратной связи
                   path('contact/', FeedBackView.as_view(), name='contact'),
                   # re_path(r'^contact/', FeedBackView.as_view(), name='contact'),
 
@@ -38,6 +38,10 @@ urlpatterns = [
                   # Маршрут: страницы поиска, 2 варианта.
                   # path('search/', SearchResultsView.as_view(), name='search_results'),
                   re_path(r'^search/', SearchResultsView.as_view(), name='search_results'),
+
+                  # Маршрут: страницы поиска, 2 варианта.
+                  # path('search/', SearchResultsView.as_view(), name='search_results'),
+                  re_path(r'^search_forum/', SearchResultsForumView.as_view(), name='search_results_forum'),
 
                   # Маршрут: страницы форума, 2 варианта.
                   path('forum/', ForumView.as_view(), name='forum'),

@@ -51,6 +51,10 @@ height: 250px;
 .for_content {
 height: 420px;
 }
+/* Размер окна в иконках форум на главной странице */
+.for_content_forum {
+height: 450px;
+}
 
 /* Цвет текста */
 .dark {
